@@ -1,723 +1,527 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Slick &amp; Dapper - President's Avenue Branch | Barber shop in BF Homes</title>
-<meta name="description" content="Slick &amp; Dapper - President&#39;s Avenue Branch — Classic cuts, modern vibes. Visit us in BF Homes.">
-<meta name="keywords" content="Slick &amp; Dapper - President&#39;s Avenue Branch, Barber shop, BF Homes, Philippines, local business">
-<meta name="city" content="BF Homes, Metro Manila">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ===== DESIGN TOKENS ===== */
-:root {
-  --color-primary: #1C1A18;
-  --color-accent: #C2847A;
-  --color-bg: #FAF8F5;
-  --color-dark: #1e293b;
-  --color-cream: #f8f5f0;
-  --color-white: #ffffff;
-  --color-text: #1e293b;
-  --color-muted: rgba(30,41,59,.65);
-  --color-border: rgba(30,41,59,.15);
-  --font-display: 'Oswald', sans-serif;
-  --font-body: 'Barlow', sans-serif;
-  --nav-height: 72px;
-  --transition: 300ms ease;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--steel:#64748B;--orange:#14213D;--orange-dark:#C9A227;--bg:#F4F1EA;
+--bg-alt:#ECEEF0;--bg-alt2:#e0e3e5;--text:#334155;--text-dark:#191c1e;
+--text-muted:#44474c;--orange-light:#ffdbca;--border:rgba(196,198,205,0.3);
+--ease:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text-muted);
+line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:80px;
+backdrop-filter:blur(12px);background:rgba(255,255,255,0.7);
+border-bottom:1px solid rgba(255,255,255,0.2);
+box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -2px rgba(0,0,0,0.1);
+transition:all .4s var(--ease)}
+.nav.scrolled{background:rgba(255,255,255,0.95)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;height:100%;
+display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:24px;letter-spacing:-0.6px;color:var(--text-dark)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-weight:500;font-size:14px;letter-spacing:0.7px;color:var(--text-muted);
+transition:color .3s var(--ease)}
+.nav-links a:hover{color:var(--orange-dark)}
+.btn-book{background:var(--orange-dark);color:#fff;padding:10px 24px;border-radius:9999px;
+font-weight:600;font-size:14px;letter-spacing:0.7px;transition:all .3s var(--ease)}
+.btn-book:hover{background:var(--orange);transform:translateY(-2px)}
+
+/* HERO */
+.hero{position:relative;height:921px;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1920&amp;h=1080&amp;fit=crop') center/cover no-repeat;will-change:transform}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(25,28,30,0.8),rgba(25,28,30,0.4) 50%,rgba(25,28,30,0))}
+.hero-content{position:relative;z-index:2;max-width:672px;padding-left:24px}
+.hero h1{font-weight:800;font-size:clamp(32px,5vw,48px);line-height:1.1;letter-spacing:-1px;color:#fff;margin-bottom:24px}
+.hero p{font-size:18px;line-height:1.625;color:rgba(255,255,255,0.8);margin-bottom:16px}
+.hero-btns{display:flex;gap:16px;margin-top:32px}
+.btn-primary{background:var(--orange-dark);color:#fff;padding:16px 32px;border-radius:9999px;
+font-weight:600;font-size:14px;letter-spacing:0.7px;transition:all .3s var(--ease)}
+.btn-primary:hover{background:var(--orange);transform:translateY(-2px);box-shadow:0 8px 24px rgba(249,115,22,0.3)}
+.btn-secondary{backdrop-filter:blur(6px);background:rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.2);color:#fff;padding:17px 33px;border-radius:9999px;
+font-weight:600;font-size:14px;letter-spacing:0.7px;transition:all .3s var(--ease)}
+.btn-secondary:hover{background:rgba(255,255,255,0.2)}
+
+/* SERVICES */
+.services{padding:80px 24px;background:var(--bg)}
+.services-inner{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:64px;align-items:flex-start}
+.section-header{text-align:center;width:100%;display:flex;flex-direction:column;gap:16px;align-items:center}
+.section-header h2{font-weight:700;font-size:32px;letter-spacing:-0.32px;color:var(--text-dark)}
+.section-header p{font-size:16px;color:var(--text-muted);max-width:576px;text-align:center}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;width:100%}
+.service-card{background:#fff;border-radius:24px;padding:33px;display:flex;flex-direction:column;gap:12px;
+box-shadow:0 2px 2px rgba(100,116,139,0.05),0 1px 1px rgba(100,116,139,0.1);
+transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.service-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(100,116,139,0.12)}
+.service-icon{width:56px;height:56px;border-radius:16px;background:var(--orange-light);
+display:flex;align-items:center;justify-content:center;font-size:28px}
+.service-card h3{font-weight:600;font-size:24px;color:var(--text-dark);padding-top:12px}
+.service-card p{font-size:16px;color:var(--text-muted);line-height:1.5}
+.service-link{display:flex;align-items:center;gap:8px;padding-top:12px;
+font-weight:600;font-size:14px;color:var(--orange-dark);letter-spacing:0.7px;cursor:pointer}
+.service-link::after{content:'→';font-size:14px;transition:transform .3s var(--ease)}
+.service-link:hover::after{transform:translateX(4px)}
+
+/* ABOUT */
+.about{padding:80px 24px;background:var(--bg-alt)}
+.about-inner{max-width:1280px;margin:0 auto;display:flex;gap:64px;align-items:center;justify-content:center}
+.about-img{flex:1;position:relative}
+.about-img-bg{position:absolute;left:-24px;top:-24px;width:128px;height:128px;border-radius:24px;background:var(--orange-light);z-index:0}
+.about-img-frame{position:relative;z-index:1;border-radius:24px;overflow:hidden;
+aspect-ratio:4/3;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
+.about-img-frame img{width:100%;height:100%;object-fit:cover}
+.about-stat{position:absolute;bottom:-40px;right:-40px;z-index:2;background:#fff;
+padding:32px;border-radius:24px;
+box-shadow:0 10px 15px -3px rgba(100,116,139,0.1),0 4px 6px -2px rgba(100,116,139,0.05)}
+.about-stat .num{font-weight:800;font-size:48px;color:var(--orange-dark);letter-spacing:-1px}
+.about-stat .label{font-weight:600;font-size:14px;color:var(--text-muted);letter-spacing:0.7px}
+.about-text{flex:1;display:flex;flex-direction:column;gap:15px}
+.about-text .eyebrow{font-weight:600;font-size:14px;color:var(--orange-dark);letter-spacing:1.4px}
+.about-text h2{font-weight:700;font-size:32px;color:var(--text-dark);letter-spacing:-0.32px;line-height:1.2}
+.about-text p{font-size:16px;color:var(--text-muted);line-height:1.5}
+.about-features{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;padding-top:16px}
+.about-feature{display:flex;align-items:center;gap:12px;font-size:16px;color:var(--text-dark)}
+.about-feature::before{content:'✓';width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+background:var(--orange);color:#fff;border-radius:50%;font-size:12px;flex-shrink:0}
+
+/* TESTIMONIALS */
+.testimonials{padding:80px 24px;background:var(--bg-alt)}
+.testimonials-inner{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:64px}
+.brands{display:flex;justify-content:center;align-items:center;gap:96px;opacity:0.6;flex-wrap:wrap}
+.brand{font-weight:600;font-size:24px;letter-spacing:-1.2px;color:var(--text-dark)}
+.testimonials h2{text-align:center;font-weight:700;font-size:32px;color:var(--text-dark);letter-spacing:-0.32px}
+.testimonial-grid{display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.testimonial-card{background:#fff;border-radius:24px;padding:33px;width:389px;
+border:1px solid var(--border);
+box-shadow:0 2px 2px rgba(100,116,139,0.05),0 1px 1px rgba(100,116,139,0.1);
+display:flex;flex-direction:column;gap:24px}
+.stars{display:flex;gap:4px;color:var(--orange);font-size:18px}
+.testimonial-text{font-style:italic;font-size:16px;color:var(--text-muted);line-height:1.5}
+.testimonial-author{display:flex;align-items:center;gap:16px}
+.testimonial-avatar{width:48px;height:48px;border-radius:50%;background:#e6e8ea;display:flex;
+align-items:center;justify-content:center;font-weight:600;color:var(--text-dark)}
+.testimonial-name{font-weight:400;font-size:16px;color:var(--text-dark)}
+.testimonial-role{font-weight:500;font-size:12px;color:var(--text-muted)}
+
+/* CTA */
+.cta{margin:0 24px;border-radius:40px;overflow:hidden;
+box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);
+display:flex;background:#e6e8ea}
+.cta-info{background:#4c5b71;padding:64px;color:#fff;flex:0 0 40%;display:flex;flex-direction:column;justify-content:center;gap:40px;position:relative;overflow:hidden}
+.cta-info h2{font-weight:700;font-size:32px;letter-spacing:-0.32px;line-height:1.2}
+.cta-info p{font-size:16px;line-height:1.625;color:rgba(211,228,254,0.8)}
+.cta-contact{display:flex;flex-direction:column;gap:24px}
+.cta-contact-item{display:flex;align-items:center;gap:16px}
+.cta-contact-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);
+display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cta-contact-item span{font-size:16px;color:#fff}
+.cta-form{background:#fff;padding:64px;flex:1}
+.cta-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+.form-field{position:relative}
+.form-field.full{grid-column:1/-1}
+.form-field label{font-weight:600;font-size:13px;color:var(--text-muted);letter-spacing:0.7px;display:block;margin-bottom:6px}
+.form-field input,.form-field select,.form-field textarea{
+width:100%;padding:14px 18px;border:none;border-radius:12px;background:#f1f5f9;
+font-family:'Barlow';font-size:15px;color:var(--text-dark);
+box-shadow:inset 2px 2px 5px 1px rgba(0,0,0,0.05),inset -2px -2px 5px 1px rgba(255,255,255,0.7);
+transition:box-shadow .3s var(--ease)}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+outline:none;box-shadow:inset 2px 2px 5px 1px rgba(0,0,0,0.05),inset -2px -2px 5px 1px rgba(255,255,255,0.7),0 0 0 2px var(--orange)}
+.form-field textarea{resize:vertical;min-height:120px}
+.btn-submit{grid-column:1/-1;background:var(--orange-dark);color:#fff;padding:20px 32px;
+border:none;border-radius:9999px;font-weight:600;font-size:14px;letter-spacing:0.7px;
+cursor:pointer;width:100%;transition:all .3s var(--ease);margin-top:16px}
+.btn-submit:hover{background:var(--orange);transform:translateY(-2px)}
+
+/* FOOTER */
+.footer{background:var(--bg-alt2);padding:80px 24px 0}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;gap:32px;align-items:flex-start}
+.footer-col{flex:1}
+.footer-col:first-child{padding-bottom:54px}
+.footer-col:last-child{padding-bottom:104px}
+.footer-brand{font-weight:700;font-size:24px;color:var(--text-dark)}
+.footer-col p{font-size:16px;color:var(--text-muted);line-height:1.5;margin-top:23px}
+.footer-col h4{font-weight:600;font-size:14px;color:var(--orange-dark);letter-spacing:0.7px;margin-bottom:24px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:16px}
+.footer-col ul li a{font-size:16px;color:var(--text-muted);transition:color .3s var(--ease)}
+.footer-col ul li a:hover{color:var(--orange-dark)}
+.footer-social{display:flex;gap:16px}
+.footer-social a{width:40px;height:40px;border-radius:50%;background:var(--bg-alt);
+display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .3s var(--ease)}
+.footer-social a:hover{background:var(--orange);color:#fff}
+.footer-bottom{max-width:1280px;margin:0 auto;border-top:1px solid #c4c6cd;padding:32px 24px;
+text-align:center;font-size:12px;color:var(--text-muted)}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.clip-reveal{clip-path:inset(0 100% 0 0);transition:clip-path 1.2s var(--ease)}
+.clip-reveal.visible{clip-path:inset(0 0 0 0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+.services-grid{grid-template-columns:1fr}
+.about-inner{flex-direction:column}
+.cta{flex-direction:column}
+.cta-info{flex:1}
+.cta-form-grid{grid-template-columns:1fr}
+.footer-inner{flex-direction:column}
+.hero h1{font-size:32px}
 }
 
-/* ===== RESET ===== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-body);
-  color: var(--color-text);
-  background: var(--color-bg);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-::selection { background: var(--color-primary); color: var(--color-dark); }
-a { color: var(--color-accent); text-decoration: none; }
-a:hover { color: var(--color-cream); }
-img { max-width: 100%; display: block; }
-input, select, textarea, button { font-family: var(--font-body); }
-input:focus, select:focus { outline: 2px solid var(--color-accent); outline-offset: 0; }
+/* Focus states */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--cta,#14213D);outline-offset:2px}
 
-@keyframes heroIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
-
-/* ===== SCROLL REVEAL ===== */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
-.reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-/* ===== NAV ===== */
-.nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--color-dark);
-  border-bottom: 1px solid rgba(201,169,110,.25);
-  height: var(--nav-height);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 32px; max-width: 1200px; margin: 0 auto; gap: 24px;
-}
-.nav-brand { display: flex; align-items: baseline; gap: 10px; color: var(--color-cream); }
-.nav-brand-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 2px; line-height: 1; }
-.nav-brand-accent { font-family: var(--font-display); font-size: 28px; letter-spacing: 2px; line-height: 1; color: var(--color-accent); }
-.nav-links { display: flex; align-items: center; gap: 36px; }
-.nav-links a { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--color-cream); }
-.nav-links a:hover { color: var(--color-accent); }
-.nav-cta {
-  font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  background: var(--color-accent); color: var(--color-dark);
-  padding: 12px 24px; transition: background var(--transition);
-}
-.nav-cta:hover { background: var(--color-cream); color: var(--color-dark); }
-
-/* ===== HERO ===== */
-.hero {
-  position: relative; min-height: calc(100vh - var(--nav-height));
-  background: var(--color-dark);
-  background-image: linear-gradient(rgba(30,41,59,.85), rgba(30,41,59,.95)), url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1920&amp;h=1080&amp;fit=crop');
-  background-size: cover; background-position: center;
-  display: flex; flex-direction: column; overflow: hidden;
-}
-.hero-bg-text {
-  position: absolute; top: -80px; right: -40px;
-  font-family: var(--font-display); font-size: 420px; line-height: 1;
-  color: rgba(201,169,110,.06); pointer-events: none; user-select: none;
-}
-.hero-content {
-  flex: 1; display: flex; align-items: center;
-  max-width: 1200px; width: 100%; margin: 0 auto;
-  padding: 80px 32px 40px; box-sizing: border-box; position: relative;
-}
-.hero-inner { animation: heroIn .9s ease both; }
-.hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
-.hero-eyebrow-line { width: 48px; height: 2px; background: var(--color-accent); }
-.hero-eyebrow-text { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--color-accent); }
-.hero-headline {
-  margin: 0; font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(80px, 11vw, 168px); line-height: .92; letter-spacing: 1px;
-  color: var(--color-cream); text-wrap: balance;
-}
-.hero-headline-accent { color: var(--color-accent); }
-.hero-subhead {
-  margin: 28px 0 40px; max-width: 520px;
-  font-size: 18px; line-height: 1.6; color: rgba(248,245,240,.75);
-}
-.hero-ctas { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.hero-cta-primary {
-  display: inline-block; background: var(--color-accent); color: var(--color-dark);
-  font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  padding: 18px 44px; transition: background var(--transition);
-}
-.hero-cta-primary:hover { background: var(--color-cream); color: var(--color-dark); }
-.hero-cta-secondary {
-  display: inline-block; border: 2px solid rgba(248,245,240,.3); color: var(--color-cream);
-  font-size: 15px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-  padding: 16px 36px; transition: border-color var(--transition), color var(--transition);
-}
-.hero-cta-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
-.hero-stats {
-  position: relative; border-top: 1px solid rgba(201,169,110,.25);
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 32px; display: grid; grid-template-columns: 1fr 1fr 1fr;
-}
-.hero-stat { padding: 28px 0; display: flex; align-items: baseline; gap: 12px; }
-.hero-stat:nth-child(2), .hero-stat:nth-child(3) { padding-left: 32px; border-left: 1px solid rgba(201,169,110,.25); }
-.hero-stat-number { font-family: var(--font-display); font-size: 52px; line-height: 1; color: var(--color-accent); }
-.hero-stat-label { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(248,245,240,.6); }
-
-/* ===== SECTION COMMON ===== */
-.section { padding: 110px 32px; }
-.section-inner { max-width: 1200px; margin: 0 auto; }
-.section-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-.section-eyebrow-line { width: 48px; height: 2px; background: var(--color-primary); }
-.section-eyebrow-text { font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--color-primary); }
-.section-heading {
-  margin: 0 0 56px; font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(48px, 6vw, 84px); line-height: .95; color: var(--color-dark);
-}
-
-/* ===== SERVICES ===== */
-.services { background: var(--color-bg); }
-.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border: 2px solid var(--color-dark); }
-.service-card {
-  position: relative; padding: 40px 32px 36px;
-  display: flex; flex-direction: column; gap: 0; min-height: 380px;
-  transition: background var(--transition);
-}
-.service-card:nth-child(-n+2) { border-right: 2px solid var(--color-dark); }
-.service-card-light { background: var(--color-bg); }
-.service-card-light:hover { background: var(--color-dark); color: var(--color-cream); }
-.service-card-dark { background: var(--color-dark); color: var(--color-cream); }
-.service-card-badge {
-  position: absolute; top: 20px; right: 20px;
-  background: var(--color-accent); color: var(--color-dark);
-  font-size: 10.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  padding: 6px 12px;
-}
-.service-card-number {
-  font-family: var(--font-display); font-size: 120px; line-height: 1;
-  color: rgba(30,41,59,.1);
-}
-.service-card-dark .service-card-number { color: rgba(248,245,240,.1); }
-.service-card-title {
-  margin: 16px 0 12px; font-family: var(--font-display); font-weight: 400;
-  font-size: 40px; line-height: 1; letter-spacing: 1px; color: inherit;
-}
-.service-card-desc {
-  margin: 0 0 24px; font-size: 14.5px; line-height: 1.65;
-  color: inherit; opacity: .7; flex: 1;
-}
-.service-card-footer {
-  display: flex; align-items: baseline; justify-content: space-between;
-  border-top: 2px solid var(--color-accent); padding-top: 20px;
-}
-.service-card-price { font-family: var(--font-display); font-size: 44px; line-height: 1; color: var(--color-primary); }
-.service-card-dark .service-card-price { color: var(--color-accent); }
-.service-card-duration { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: .55; }
-
-/* ===== TEAM ===== */
-.team { background: var(--color-bg); padding: 0 32px 110px; }
-.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
-.team-card { display: flex; flex-direction: column; }
-.team-photo {
-  aspect-ratio: 4/5; background: var(--color-dark);
-  background-size: cover; background-position: center;
-  border: 2px solid var(--color-dark);
-}
-.team-info { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 20px; }
-.team-name { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 30px; letter-spacing: 1px; color: var(--color-dark); }
-.team-years { font-family: var(--font-display); font-size: 22px; color: var(--color-primary); white-space: nowrap; }
-.team-role { margin: 6px 0 0; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(30,41,59,.55); }
-
-/* ===== GALLERY ===== */
-.gallery { background: var(--color-dark); padding: 110px 32px; }
-.gallery .section-eyebrow-line { background: var(--color-accent); }
-.gallery .section-eyebrow-text { color: var(--color-accent); }
-.gallery .section-heading { color: var(--color-cream); }
-.gallery-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-}
-.gallery-item {
-  aspect-ratio: 1; background-size: cover; background-position: center;
-  border: 2px solid rgba(201,169,110,.25);
-  transition: border-color var(--transition);
-}
-.gallery-item:hover { border-color: var(--color-accent); }
-
-/* ===== TESTIMONIALS ===== */
-.testimonials { background: var(--color-bg); padding: 0 32px 110px; }
-.testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
-.testimonial-card {
-  margin: 0; background: var(--color-white); border: 2px solid var(--color-dark);
-  padding: 36px 32px; display: flex; flex-direction: column; gap: 18px;
-}
-.testimonial-stars { display: flex; gap: 4px; font-size: 20px; color: var(--color-accent); letter-spacing: 2px; }
-.testimonial-text { margin: 0; font-size: 16px; line-height: 1.65; color: var(--color-dark); flex: 1; }
-.testimonial-meta { display: flex; align-items: baseline; gap: 10px; border-top: 1px solid var(--color-border); padding-top: 16px; }
-.testimonial-name { font-weight: 700; font-size: 14px; color: var(--color-dark); }
-.testimonial-detail { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: rgba(30,41,59,.5); }
-
-/* ===== TRUST BAR ===== */
-.trust-bar { position: relative; background: var(--color-dark); padding: 90px 32px; overflow: hidden; }
-.trust-bar-grid { position: relative; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); }
-.trust-stat { text-align: center; padding: 0 24px; }
-.trust-stat:nth-child(2) { border-left: 1px solid rgba(201,169,110,.25); border-right: 1px solid rgba(201,169,110,.25); }
-.trust-stat-number { font-family: var(--font-display); font-size: clamp(64px,7vw,104px); line-height: 1; color: var(--color-accent); }
-.trust-stat-label { margin-top: 12px; font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(248,245,240,.6); }
-
-/* ===== BOOKING ===== */
-.booking { background: var(--color-bg); padding: 110px 32px; }
-.booking-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 0; border: 2px solid var(--color-dark); }
-.booking-form-wrap { background: var(--color-white); padding: 48px 44px; }
-.booking-form { display: flex; flex-direction: column; gap: 24px; }
-.booking-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.form-group { display: flex; flex-direction: column; gap: 8px; }
-.form-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--color-dark); }
-.form-input {
-  border: 2px solid var(--color-dark); background: var(--color-bg);
-  padding: 14px 16px; font-size: 15px; color: var(--color-dark); border-radius: 0;
-}
-.form-select {
-  border: 2px solid var(--color-dark); background: var(--color-bg);
-  padding: 14px 12px; font-size: 15px; color: var(--color-dark); border-radius: 0; appearance: none;
-}
-.form-error { font-size: 12.5px; font-weight: 600; color: #b3402a; min-height: 16px; }
-.btn-submit {
-  align-self: flex-start; background: var(--color-dark); color: var(--color-cream);
-  border: none; cursor: pointer; font-size: 15px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; padding: 18px 48px;
-  transition: background var(--transition);
-}
-.btn-submit:hover { background: var(--color-primary); color: var(--color-cream); }
-
-/* ===== WHATSAPP CTA ===== */
-.whatsapp-cta {
-  margin-top: 24px; display: flex; align-items: center; gap: 14px;
-  background: #25D366; color: #075E54;
-  padding: 18px 44px; border: none; cursor: pointer;
-  font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-  transition: background var(--transition), color var(--transition);
-}
-.whatsapp-cta:hover { background: #1eb558; color: #fff; }
-.whatsapp-icon { font-size: 22px; }
-
-/* ===== BOOKING SIDEBAR ===== */
-.booking-aside { background: var(--color-dark); padding: 48px 40px; display: flex; flex-direction: column; gap: 36px; }
-.booking-aside-block { display: flex; flex-direction: column; gap: 8px; }
-.booking-aside-label { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--color-accent); }
-.booking-aside-phone { font-family: var(--font-display); font-size: 34px; line-height: 1.1; color: var(--color-cream); }
-.booking-aside-phone:hover { color: var(--color-accent); }
-.booking-aside-hours-row { display: flex; justify-content: space-between; gap: 16px; font-size: 14.5px; color: var(--color-cream); border-bottom: 1px solid rgba(201,169,110,.25); padding-bottom: 10px; }
-.booking-aside-hours-val { color: rgba(248,245,240,.75); }
-.booking-aside-address { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--color-cream); }
-.booking-aside-note { margin-top: auto; border: 1px solid rgba(201,169,110,.35); padding: 16px 18px; }
-.booking-aside-note p { margin: 0; font-size: 13px; line-height: 1.55; color: rgba(248,245,240,.7); }
-.booking-aside-note-highlight { color: var(--color-accent); font-weight: 700; }
-
-/* ===== FOOTER ===== */
-.footer { background: var(--color-dark); border-top: 1px solid rgba(201,169,110,.25); padding: 32px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.footer-brand { font-family: var(--font-display); font-size: 22px; letter-spacing: 2px; color: var(--color-cream); }
-.footer-brand-accent { color: var(--color-accent); }
-.footer-copy { font-size: 12.5px; letter-spacing: 1px; color: rgba(248,245,240,.5); }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .nav-links { gap: 18px; }
-  .nav-links a:not(.nav-cta) { display: none; }
-  .services-grid, .team-grid, .testimonials-grid, .gallery-grid { grid-template-columns: 1fr; }
-  .booking-grid { grid-template-columns: 1fr; }
-  .booking-form-row { grid-template-columns: 1fr; }
-  .hero-stats { grid-template-columns: 1fr; }
-  .hero-stat:nth-child(2), .hero-stat:nth-child(3) { padding-left: 0; border-left: none; border-top: 1px solid rgba(201,169,110,.25); }
-  .trust-bar-grid { grid-template-columns: 1fr; gap: 32px; }
-  .trust-stat:nth-child(2) { border-left: none; border-right: none; border-top: 1px solid rgba(201,169,110,.25); border-bottom: 1px solid rgba(201,169,110,.25); padding: 32px 0; }
+/* REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){
+*{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+.reveal{opacity:1!important;transform:none!important}
+.clip-reveal{clip-path:none!important}
+.hero-bg{transform:none!important}
 }
 </style>
 </head>
 <body>
-
-<!-- ============ NAV ============ -->
-<nav class="nav">
-  <a href="#top" class="nav-brand">
-    <span class="nav-brand-name">Slick &amp; Dapper - President's Avenue Branch</span>
-    <span class="nav-brand-accent">Slick &amp; Dapper - President's Avenue Branch</span>
-  </a>
-  <div class="nav-links">
-    <a href="#services">Services</a>
-    <a href="#barbers">Barbers</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#reviews">Reviews</a>
-    <a href="https://wa.me/639458411098" class="nav-cta">Contact Us</a>
-  </div>
+<!--NAV-->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+<a href="#" class="logo">Slick &amp; Dapper - President's Avenue Branch</a>
+<div class="nav-links">
+<a href="#services">Services</a>
+<a href="#about">About</a>
+<a href="#testimonials">Testimonials</a>
+</div>
+<a href="https://wa.me/639458411098" class="btn-book">Contact Us</a>
+</div>
 </nav>
 
-<!-- ============ HERO ============ -->
-<header id="top" class="hero">
-  <div class="hero-bg-text">Barber shop</div>
-  <div class="hero-content">
-    <div class="hero-inner">
-      <div class="hero-eyebrow">
-        <div class="hero-eyebrow-line"></div>
-        <span class="hero-eyebrow-text">Serving BF Homes</span>
-      </div>
-      <h1 class="hero-headline">Slick &amp; Dapper - President's Avenue Branch</h1>
-      <p class="hero-subhead">Barber shop</p>
-      <div class="hero-ctas">
-        <a href="https://wa.me/639458411098" class="hero-cta-primary">Get in Touch</a>
-        <a href="#services" class="hero-cta-secondary">See Services</a>
-      </div>
-    </div>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <span class="hero-stat-number">0+ Google reviews</span>
-      <span class="hero-stat-label">Trusted Locally</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-number">Since 2026</span>
-      <span class="hero-stat-label">Serving BF Homes</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-number">No appointment needed</span>
-      <span class="hero-stat-label">Walk-ins Welcome</span>
-    </div>
-  </div>
-</header>
-
-<!-- ============ ABOUT ============ -->
-<section id="about" class="section" style="background:var(--color-bg)">
-  <div class="section-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-    <div class="reveal">
-      <div class="section-eyebrow">
-        <div class="section-eyebrow-line"></div>
-        <span class="section-eyebrow-text">Classic cuts, modern vibes.</span>
-      </div>
-      <h2 class="section-heading">About Slick &amp; Dapper - President's Avenue Branch</h2>
-      <p style="font-size:17px;line-height:1.7;color:var(--color-muted);max-width:480px">Slick &amp; Dapper - President's Avenue Branch has been serving the BF Homes community with precision cuts and classic barbering. Walk in, sit back, walk out fresh.</p>
-      <p style="margin-top:24px;font-family:var(--font-display);font-size:24px;color:var(--color-primary)">Est. 2026</p>
-    </div>
-    <div class="reveal" style="transition-delay:120ms">
-      <div style="aspect-ratio:4/3;background-size:cover;background-position:center;background-image:url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&amp;h=600&amp;fit=crop');border:2px solid var(--color-dark)"></div>
-    </div>
-  </div>
+<!--HERO-->
+<section class="hero" id="hero">
+<div class="hero-bg" id="heroBg"></div>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<h1>Slick &amp; Dapper - President's Avenue Branch</h1>
+<p>Barber shop</p>
+<div class="hero-btns">
+<a href="https://wa.me/639458411098" class="btn-primary">Get in Touch</a>
+<a href="#services" class="btn-secondary">View All Services</a>
+</div>
+</div>
 </section>
-
-<!-- ============ SERVICES ============ -->
-<section id="services" class="section services">
-  <div class="section-inner">
-    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:56px">
-      <div>
-        <div class="section-eyebrow">
-          <div class="section-eyebrow-line"></div>
-          <span class="section-eyebrow-text">Barber shop</span>
-        </div>
-        <h2 class="section-heading">Our Services</h2>
-      </div>
-      <p style="margin:0;max-width:340px;font-size:15px;line-height:1.6;color:var(--color-muted)">No packages, no upsells. Three things, done properly, at one price each.</p>
-    </div>
-    <div class="services-grid">
-      <div class="reveal service-card service-card-light">
-        <div style="aspect-ratio:16/9;background-size:cover;background-position:center;background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&amp;h=400&amp;fit=crop');margin:-40px -32px 24px;border-bottom:2px solid var(--color-dark)"></div>
-        <span class="service-card-number">01</span>
-        <h3 class="service-card-title">Classic Cut</h3>
-        <p class="service-card-desc">Scissor or clipper cut, your call.</p>
-        <div class="service-card-footer">
-          <span class="service-card-price"></span>
-        </div>
-      </div>
-      <div class="reveal service-card service-card-light" style="transition-delay:120ms">
-        <div style="aspect-ratio:16/9;background-size:cover;background-position:center;background-image:url('https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=600&amp;h=400&amp;fit=crop');margin:-40px -32px 24px;border-bottom:2px solid var(--color-dark)"></div>
-        <span class="service-card-number">02</span>
-        <h3 class="service-card-title">Beard Trim</h3>
-        <p class="service-card-desc">Shape and line-up, hot towel finish.</p>
-        <div class="service-card-footer">
-          <span class="service-card-price"></span>
-        </div>
-      </div>
-      <div class="reveal service-card service-card-dark" style="transition-delay:240ms">
-        <div class="service-card-badge">House Special</div>
-        <div style="aspect-ratio:16/9;background-size:cover;background-position:center;background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=601&amp;h=401&amp;fit=crop');margin:-40px -32px 24px;border-bottom:2px solid var(--color-accent)"></div>
-        <span class="service-card-number">03</span>
-        <h3 class="service-card-title">Cut + Shave Combo</h3>
-        <p class="service-card-desc">Full service, fresh every time.</p>
-        <div class="service-card-footer">
-          <span class="service-card-price"></span>
-        </div>
-      </div>
-    </div>
-  </div>
+<!--SERVICES-->
+<section class="services" id="services">
+<div class="services-inner">
+<div class="section-header reveal">
+<h2>Our Services</h2>
+<p>From precision tuning to routine maintenance, we provide comprehensive<br>care for your automotive investment.</p>
+</div>
+<div class="services-grid">
+<div class="service-card reveal">
+<div class="service-icon">🔧</div>
+<h3>Classic Cut</h3>
+<p>Scissor or clipper cut, your call.</p>
+<div class="service-link">Learn More</div>
+</div>
+<div class="service-card reveal">
+<div class="service-icon">🛑</div>
+<h3>Beard Trim</h3>
+<p>Shape and line-up, hot towel finish.</p>
+<div class="service-link">Learn More</div>
+</div>
+<div class="service-card reveal">
+<div class="service-icon">🛢️</div>
+<h3>Cut + Shave Combo</h3>
+<p>Full service, fresh every time.</p>
+<div class="service-link">Learn More</div>
+</div>
+<div class="service-card reveal">
+<div class="service-icon">🚗</div>
+<h3>Tire Rotation</h3>
+<p>Laser-guided alignment and precision balancing to optimize tread life and fuel efficiency.</p>
+<div class="service-link">Learn More</div>
+</div>
+<div class="service-card reveal">
+<div class="service-icon">⚙️</div>
+<h3>Transmission</h3>
+<p>Full diagnostic analysis and expert repair for both automatic and dual-clutch transmissions.</p>
+<div class="service-link">Learn More</div>
+</div>
+<div class="service-card reveal">
+<div class="service-icon">⚡</div>
+<h3>Electrical</h3>
+<p>Comprehensive testing of complex electrical looms, batteries, and onboard computer systems.</p>
+<div class="service-link">Learn More</div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- ============ TEAM ============ -->
-<section id="barbers" class="section team">
-  <div class="section-inner">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="section-eyebrow-text">The Chairs</span>
-    </div>
-    <h2 class="section-heading reveal">Meet the Team</h2>
-    <div class="team-grid">
-      <div class="reveal team-card">
-        <div class="team-photo" style="background-image:url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&amp;h=300&amp;fit=crop')"></div>
-        <div class="team-info">
-          <h3 class="team-name">Owner / Manager</h3>
-        </div>
-        <p class="team-role">Slick &amp; Dapper - President's Avenue Branch</p>
-      </div>
-      <div class="reveal team-card" style="transition-delay:120ms">
-        <div class="team-photo" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&amp;h=300&amp;fit=crop')"></div>
-        <div class="team-info">
-          <h3 class="team-name">Lead Staff</h3>
-        </div>
-        <p class="team-role">Slick &amp; Dapper - President's Avenue Branch</p>
-      </div>
-      <div class="reveal team-card" style="transition-delay:240ms">
-        <div class="team-photo" style="background-image:url('https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&amp;h=300&amp;fit=crop')"></div>
-        <div class="team-info">
-          <h3 class="team-name">Client Relations</h3>
-        </div>
-        <p class="team-role">Slick &amp; Dapper - President's Avenue Branch</p>
-      </div>
-    </div>
-  </div>
+<!--ABOUT-->
+<section class="about" id="about">
+<div class="about-inner">
+<div class="about-img reveal">
+<div class="about-img-bg"></div>
+<div class="about-img-frame clip-reveal">
+<img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?w=800&amp;h=600&amp;fit=crop" alt="Slick &amp; Dapper - President&#39;s Avenue Branch">
+</div>
+<div class="about-stat">
+<div class="num">2026+</div>
+<div class="label">Years of Master Expertise</div>
+</div>
+</div>
+<div class="about-text reveal">
+<div class="eyebrow">OUR STORY</div>
+<h2>About Slick &amp; Dapper - President's Avenue Branch</h2>
+<p>Slick &amp; Dapper - President's Avenue Branch has been serving the BF Homes community with precision cuts and classic barbering. Walk in, sit back, walk out fresh.</p>
+<div class="about-features">
+<div class="about-feature">ASE Certified</div>
+<div class="about-feature">OEM Parts Only</div>
+<div class="about-feature">Full Warranty</div>
+<div class="about-feature">White Glove Service</div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- ============ GALLERY ============ -->
-<section id="gallery" class="section gallery">
-  <div class="section-inner">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="section-eyebrow-text">The Work</span>
-    </div>
-    <h2 class="section-heading reveal">OUR CUTS</h2>
-    <div class="gallery-grid">
-      <div class="reveal gallery-item" style="background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&amp;h=600&amp;fit=crop')"></div>
-      <div class="reveal gallery-item" style="transition-delay:80ms;background-image:url('https://images.unsplash.com/photo-1503951914875-452cb67b811a?w=800&amp;h=600&amp;fit=crop')"></div>
-      <div class="reveal gallery-item" style="transition-delay:160ms;background-image:url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&amp;h=600&amp;fit=crop')"></div>
-      <div class="reveal gallery-item" style="transition-delay:240ms;background-image:url('https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=800&amp;h=600&amp;fit=crop')"></div>
-      <div class="reveal gallery-item" style="transition-delay:320ms;background-image:url('https://images.unsplash.com/photo-1505238960249-1533e2d2a6e6?w=800&amp;h=600&amp;fit=crop')"></div>
-      <div class="reveal gallery-item" style="transition-delay:400ms;background-image:url('https://images.unsplash.com/photo-1493256988950-0b5b3b3e6e8b?w=800&amp;h=600&amp;fit=crop')"></div>
-    </div>
-  </div>
+<!--TESTIMONIALS-->
+<section class="testimonials" id="testimonials">
+<div class="testimonials-inner">
+<div class="brands reveal">
+<div class="brand">ASE CERTIFIED</div>
+<div class="brand">BBB A+ RATING</div>
+<div class="brand">BOSCH SERVICE</div>
+<div class="brand">AAA APPROVED</div>
+</div>
+<h2 class="reveal">Voices of Excellence</h2>
+<div class="testimonial-grid">
+<div class="testimonial-card reveal">
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">"The level of professionalism at Luxe Auto is unmatched. They handled my Porsche with incredible care and the digital diagnostic report was extremely detailed."</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar">JW</div>
+<div>
+<div class="testimonial-name">James Wilson</div>
+<div class="testimonial-role">911 GT3 Owner</div>
+</div>
+</div>
+</div>
+<div class="testimonial-card reveal">
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">"I finally found a shop that understands Italian engineering. Their Ferrari expert is a genius. Clean, honest, and faster than the dealership."</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar">ER</div>
+<div>
+<div class="testimonial-name">Elena Rossi</div>
+<div class="testimonial-role">488 Pista Owner</div>
+</div>
+</div>
+</div>
+<div class="testimonial-card reveal">
+<div class="stars">★★★★★</div>
+<p class="testimonial-text">"Outstanding customer service. They picked up my car and returned it fully detailed after the service. A true white-glove experience throughout."</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar">RC</div>
+<div>
+<div class="testimonial-name">Robert Chen</div>
+<div class="testimonial-role">S-Class Owner</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- ============ TESTIMONIALS ============ -->
-<section id="reviews" class="section testimonials">
-  <div class="section-inner">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="section-eyebrow-text">Word on the Street</span>
-    </div>
-    <h2 class="section-heading reveal">THEY KEEP COMING BACK</h2>
-    <div class="testimonials-grid">
-      <figure class="reveal testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote class="testimonial-text">Cleanest fade I've had in BF Homes.</blockquote>
-        <figcaption class="testimonial-meta">
-          <span class="testimonial-name">Marco</span>
-          <span class="testimonial-detail">Google Review</span>
-        </figcaption>
-      </figure>
-      <figure class="reveal testimonial-card" style="transition-delay:120ms">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote class="testimonial-text">No wait, no fuss, great cut.</blockquote>
-        <figcaption class="testimonial-meta">
-          <span class="testimonial-name">Dennis</span>
-          <span class="testimonial-detail">Google Review</span>
-        </figcaption>
-      </figure>
-      <figure class="reveal testimonial-card" style="transition-delay:240ms">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote class="testimonial-text">My barbershop for the past 2 years.</blockquote>
-        <figcaption class="testimonial-meta">
-          <span class="testimonial-name">Paolo</span>
-          <span class="testimonial-detail">Google Review</span>
-        </figcaption>
-      </figure>
-    </div>
-  </div>
+<!--CTA-->
+<section class="cta reveal" id="cta">
+<div class="cta-info" id="ctaInfo">
+<h2>Schedule Your<br>Appointment</h2>
+<p>Ready to experience the difference? Fill out the form and our concierge team will contact you within 60 minutes to confirm your slot.</p>
+<div class="cta-contact">
+<div class="cta-contact-item">
+<div class="cta-contact-icon">📞</div>
+<span>639458411098</span>
+</div>
+<div class="cta-contact-item">
+<div class="cta-contact-icon">✉️</div>
+<span></span>
+</div>
+</div>
+</div>
+<div class="cta-form">
+<form class="cta-form-grid" onsubmit="event.preventDefault();this.querySelector('.btn-submit').textContent='Request Sent! ✓';">
+<div class="form-field">
+<label>Name</label>
+<input type="text" placeholder="John Doe">
+</div>
+<div class="form-field">
+<label>Email</label>
+<input type="email" placeholder="john@example.com">
+</div>
+<div class="form-field">
+<label>Service Type</label>
+<select>
+<option>Classic Cut</option>
+<option>Beard Trim</option>
+<option>Cut + Shave Combo</option>
+<option>Tire Rotation</option>
+<option>Transmission</option>
+<option>Electrical</option>
+</select>
+</div>
+<div class="form-field">
+<label>Preferred Date</label>
+<input type="date">
+</div>
+<div class="form-field full">
+<label>Message</label>
+<textarea placeholder="Tell us about your vehicle and specific needs..."></textarea>
+</div>
+<button type="submit" class="btn-submit">Confirm Booking Request</button>
+</form>
+</div>
 </section>
-
-<!-- ============ TRUST BAR ============ -->
-<section class="section trust-bar">
-  <div class="trust-bar-grid">
-    <div class="reveal trust-stat">
-      <div class="trust-stat-number">0+ Google reviews</div>
-      <div class="trust-stat-label">Trusted Locally</div>
-    </div>
-    <div class="reveal trust-stat" style="transition-delay:120ms">
-      <div class="trust-stat-number">Since 2026</div>
-      <div class="trust-stat-label">Serving BF Homes</div>
-    </div>
-    <div class="reveal trust-stat" style="transition-delay:240ms">
-      <div class="trust-stat-number">No appointment needed</div>
-      <div class="trust-stat-label">Walk-ins Welcome</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PRICING ============ -->
-<section id="pricing" class="section" style="background:var(--color-bg)">
-  <div class="section-inner">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="section-eyebrow-text">Packages</span>
-    </div>
-    <h2 class="section-heading reveal">PRICING</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
-      <div class="reveal" style="background:var(--color-white);border:2px solid var(--color-dark);padding:36px 32px;display:flex;flex-direction:column;gap:16px">
-        <h3 style="margin:0;font-family:var(--font-display);font-size:32px;color:var(--color-dark)">Classic Cut</h3>
-        <span style="font-family:var(--font-display);font-size:48px;color:var(--color-primary)">₱180</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.65;color:var(--color-muted)">Scissor cut, clean fade, style finish</p>
-      </div>
-      <div class="reveal" style="transition-delay:120ms;background:var(--color-dark);color:var(--color-cream);border:2px solid var(--color-dark);padding:36px 32px;display:flex;flex-direction:column;gap:16px;position:relative">
-        <div style="position:absolute;top:20px;right:20px;background:var(--color-accent);color:var(--color-dark);font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 12px">Popular</div>
-        <h3 style="margin:0;font-family:var(--font-display);font-size:32px;color:var(--color-cream)">Hot Towel Shave</h3>
-        <span style="font-family:var(--font-display);font-size:48px;color:var(--color-accent)">₱220</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.65;color:rgba(248,245,240,.7)">Straight razor shave, hot towel, aftershave</p>
-      </div>
-      <div class="reveal" style="transition-delay:240ms;background:var(--color-white);border:2px solid var(--color-dark);padding:36px 32px;display:flex;flex-direction:column;gap:16px">
-        <h3 style="margin:0;font-family:var(--font-display);font-size:32px;color:var(--color-dark)">The Works</h3>
-        <span style="font-family:var(--font-display);font-size:48px;color:var(--color-primary)">₱350</span>
-        <p style="margin:0;font-size:14.5px;line-height:1.65;color:var(--color-muted)">Haircut, beard trim, hot towel shave</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ BOOKING ============ -->
-<section id="book" class="section booking">
-  <div class="section-inner">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="section-eyebrow-text">Take a Seat</span>
-    </div>
-    <h2 class="section-heading reveal">BOOK YOUR CHAIR</h2>
-    <div class="booking-grid">
-      <div class="reveal booking-form-wrap">
-        <form id="bookingForm" class="booking-form" noValidate>
-          <div class="booking-form-row">
-            <div class="form-group">
-              <label class="form-label" for="bk-name">Name</label>
-              <input id="bk-name" name="name" type="text" class="form-input" placeholder="Juan Dela Cruz" required>
-              <span class="form-error" id="errName"></span>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="bk-phone">Mobile</label>
-              <input id="bk-phone" name="phone" type="tel" class="form-input" placeholder="Your mobile number" required>
-              <span class="form-error" id="errPhone"></span>
-            </div>
-          </div>
-          <div class="booking-form-row">
-            <div class="form-group">
-              <label class="form-label" for="bk-service">Service</label>
-              <select id="bk-service" name="service" class="form-select" required>
-                <option value="">Choose a service...</option>
-                <option value="Classic Cut - ">Classic Cut - </option>
-                <option value="Beard Trim - ">Beard Trim - </option>
-                <option value="Cut + Shave Combo - ">Cut + Shave Combo - </option>
-              </select>
-              <span class="form-error" id="errService"></span>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="bk-when">Date &amp; Time</label>
-              <input id="bk-when" name="when" type="datetime-local" class="form-input" required>
-              <span class="form-error" id="errWhen"></span>
-            </div>
-          </div>
-          <button type="submit" class="btn-submit">Confirm Booking</button>
-        </form>
-        <a id="whatsappBtn" class="whatsapp-cta" href="#" target="_blank" rel="noopener">
-          <span class="whatsapp-icon">&#128241;</span>
-          Book via WhatsApp
-        </a>
-        <div id="bookingSuccess" style="display:none;">
-          <div style="width:48px;height:2px;background:var(--color-accent);margin-bottom:16px"></div>
-          <h3 style="margin:0 0 12px;font-family:var(--font-display);font-weight:400;font-size:56px;line-height:1;color:var(--color-dark)">YOU'RE ON THE BOOK.</h3>
-          <p id="confirmMsg" style="margin:0;font-size:16px;line-height:1.65;color:var(--color-muted);max-width:440px"></p>
-          <p style="margin:12px 0 0;font-size:14px;color:rgba(30,41,59,.55)">We'll text you a confirmation within the hour. Running late? Call us &mdash; we hold chairs for 15 minutes.</p>
-          <button id="resetBtn" style="align-self:flex-start;margin-top:16px;background:none;border:2px solid var(--color-dark);color:var(--color-dark);cursor:pointer;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px 28px">Book Another</button>
-        </div>
-      </div>
-      <aside class="reveal booking-aside" style="transition-delay:120ms">
-        <div class="booking-aside-block">
-          <span class="booking-aside-label">Call or Text</span>
-          <a href="tel:639458411098" class="booking-aside-phone">639458411098</a>
-        </div>
-        <div class="booking-aside-block">
-          <span class="booking-aside-label">Hours</span>
-          <div class="booking-aside-hours-row"><span>Mon &ndash; Sat</span><span class="booking-aside-hours-val">9:00 AM – 7:00 PM</span></div>
-          <div class="booking-aside-hours-row"><span>Sunday</span><span class="booking-aside-hours-val">9:00 AM – 7:00 PM</span></div>
-        </div>
-        <div class="booking-aside-block">
-          <span class="booking-aside-label">Find Us</span>
-          <p class="booking-aside-address">2F</p>
-        </div>
-        <div class="booking-aside-block">
-          <span class="booking-aside-label">Email</span>
-          <a href="mailto:" style="font-size:14.5px;color:var(--color-cream)"></a>
-        </div>
-        <div class="booking-aside-block">
-          <span class="booking-aside-label">Follow</span>
-          <div style="display:flex;gap:16px">
-            <a href="" style="font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--color-accent)">Facebook</a>
-            <a href="" style="font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--color-accent)">Instagram</a>
-          </div>
-        </div>
-        <div class="booking-aside-block">
-          <span class="booking-aside-label">Location</span>
-          <div style="margin-top:4px;border:2px solid rgba(201,169,110,.25);overflow:hidden">
-            https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.8!2d121.04!3d14.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0!2sSlick+&amp;+Dapper+-+President's+Avenue+Branch!5e0!3m2!1sen!2sph
-          </div>
-        </div>
-        <div class="booking-aside-note">
-          <p><span class="booking-aside-note-highlight">Walk-ins welcome</span> &mdash; but the book fills up by mid-afternoon. Reserve your chair.</p>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOOTER ============ -->
+<!--FOOTER-->
 <footer class="footer">
-  <div class="footer-inner">
-    <span class="footer-brand">Slick &amp; Dapper - President's Avenue Branch <span class="footer-brand-accent">Slick &amp; Dapper - President's Avenue Branch</span></span>
-    <span class="footer-copy">&copy; 2026 Slick &amp; Dapper - President's Avenue Branch &middot; BF Homes, Metro Manila &middot; Est. 2026</span>
-  </div>
+<div class="footer-inner">
+<div class="footer-col">
+<div class="footer-brand">Slick &amp; Dapper - President's Avenue Branch</div>
+<p>Classic cuts, modern vibes.</p>
+</div>
+<div class="footer-col">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="#services">Services</a></li>
+<li><a href="#about">About Us</a></li>
+<li><a href="#testimonials">Testimonials</a></li>
+<li><a href="#cta">Book Now</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Support</h4>
+<ul>
+<li><a href="#">Location</a></li>
+<li><a href="#">Hours</a></li>
+<li><a href="#">Privacy Policy</a></li>
+<li><a href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Follow Us</h4>
+<div class="footer-social">
+<a href="#">f</a>
+<a href="#">X</a>
+<a href="#">in</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">© 2024 Slick &amp; Dapper - President's Avenue Branch. All rights reserved.</div>
 </footer>
-
+<!--CREATIVE-->
+<canvas id="shaderCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.15;mix-blend-mode:overlay"></canvas>
+<div id="bloomOverlay" style="position:fixed;width:300px;height:300px;border-radius:50%;pointer-events:none;z-index:999;opacity:0;transition:opacity .4s ease;background:radial-gradient(circle,rgba(249,115,22,0.15) 0%,rgba(249,115,22,0) 70%);transform:translate(-50%,-50%)"></div>
 <script>
-// ===== SCROLL REVEAL (IntersectionObserver) =====
-var revealElements = document.querySelectorAll('.reveal');
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-revealElements.forEach(function(el) { observer.observe(el); });
+(function(){
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// ===== BOOKING FORM =====
-var bookingForm = document.getElementById('bookingForm');
-var bookingSuccess = document.getElementById('bookingSuccess');
-var confirmMsg = document.getElementById('confirmMsg');
-var resetBtn = document.getElementById('resetBtn');
-var whatsappBtn = document.getElementById('whatsappBtn');
-
-function validateField(name, phone, service, when) {
-  var errs = {};
-  if (!name.trim()) errs.name = 'Enter your name.';
-  var digits = phone.replace(/\D/g, '');
-  if (!digits) errs.phone = 'Enter a mobile number.';
-  else if (digits.length < 10) errs.phone = 'That number looks short.';
-  if (!service) errs.service = 'Pick a service.';
-  if (!when) errs.when = 'Pick a date and time.';
-  return errs;
+/* === WEBGL SIMPLEX NOISE SHADER === */
+if(!reduced){
+const canvas=document.getElementById('shaderCanvas');
+const gl=canvas.getContext('webgl');
+if(gl){
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;gl.viewport(0,0,canvas.width,canvas.height)}
+resize();window.addEventListener('resize',resize);
+const vs=`attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.)}`;
+const fs=`precision mediump float;uniform vec2 r;uniform float t;uniform float s;
+vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
+vec2 mod289(vec2 x){return x-floor(x*(1./289.))*289.;}
+vec3 permute(vec3 x){return mod289(((x*34.)+1.)*x);}
+float snoise(vec2 v){
+const vec4 C=vec4(.211324865405187,.366025403784439,-.577350269189626,.024390243902439);
+vec2 i=floor(v+dot(v,C.yy));
+vec2 x0=v-i+dot(i,C.xx);
+vec2 i1=(x0.x>x0.y)?vec2(1.,0.):vec2(0.,1.);
+vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;i=mod289(i);
+vec3 p=permute(permute(i.y+vec3(0.,i1.y,1.))+i.x+vec3(0.,i1.x,1.));
+p=mod289((p*34.+1.)*p);p=fract(p*vec3(1./41.,1./41.,1./41.));
+float m=.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)).x;m=m*m*m*m;
+return 42.*m*dot(p-vec3(.5),vec3(dot(x0,x12.xy-.5),dot(x12.xy,x12.zw-.5),dot(x12.zw-x0,vec2(0.))));
+}
+void main(){
+vec2 uv=gl_FragCoord.xy/r.xy;uv.x*=r.x/r.y;
+float n=snoise(uv*3.+vec2(t*.1,s*.02));
+n+=.5*snoise(uv*6.+vec2(-t*.05,s*.01));
+n=.5+.5*n;
+vec3 orange=vec3(.976,.451,.086);vec3 steel=vec3(.392,.455,.549);
+vec3 col=mix(steel,orange,smoothstep(.3,.7,n));
+col*=.4+.6*pow(uv.y,.5);
+gl_FragColor=vec4(col,1.);
+}`;
+function sh(t,p){const s=gl.createShader(t);gl.shaderSource(s,p);gl.compileShader(s);return s}
+const prog=gl.createProgram();
+gl.attachShader(prog,sh(gl.VERTEX_SHADER,vs));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,fs));
+gl.linkProgram(prog);gl.useProgram(prog);
+const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+const loc=gl.getAttribLocation(prog,'a');gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+const uR=gl.getUniformLocation(prog,'r'),uT=gl.getUniformLocation(prog,'t'),uS=gl.getUniformLocation(prog,'s');
+let scrollY=0;window.addEventListener('scroll',()=>{scrollY=window.scrollY},{passive:true});
+function render(){gl.uniform2f(uR,canvas.width,canvas.height);
+gl.uniform1f(uT,performance.now()*.001);gl.uniform1f(uS,scrollY*.01);
+gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(render)}render();
+}
 }
 
-bookingForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  var name = document.getElementById('bk-name').value;
-  var phone = document.getElementById('bk-phone').value;
-  var service = document.getElementById('bk-service').value;
-  var when = document.getElementById('bk-when').value;
-
-  var errs = validateField(name, phone, service, when);
-  document.getElementById('errName').textContent = errs.name || '';
-  document.getElementById('errPhone').textContent = errs.phone || '';
-  document.getElementById('errService').textContent = errs.service || '';
-  document.getElementById('errWhen').textContent = errs.when || '';
-
-  if (Object.keys(errs).length) return;
-
-  bookingForm.style.display = 'none';
-  whatsappBtn.style.display = 'none';
-  var whenStr = when ? new Date(when).toLocaleString('en-PH', { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'your chosen time';
-  confirmMsg.textContent = 'Salamat, ' + name.trim().split(' ')[0] + '. ' + service + ' on ' + whenStr + '.';
-  bookingSuccess.style.display = 'block';
-});
-
-resetBtn.addEventListener('click', function() {
-  bookingForm.reset();
-  bookingForm.style.display = 'flex';
-  whatsappBtn.style.display = 'flex';
-  bookingSuccess.style.display = 'none';
-});
-
-// ===== WHATSAPP CTA =====
-var phoneRaw = '639458411098';
-var phoneDigits = phoneRaw.replace(/\D/g, '');
-if (phoneDigits) {
-  whatsappBtn.href = 'https://wa.me/' + phoneDigits + '?text=' + encodeURIComponent('Hi! I\'d like to book a chair.');
+/* === SCROLL REVEAL WITH 80ms STAGGER === */
+if(!reduced){
+const io=new IntersectionObserver((entries)=>{
+entries.forEach((e,i)=>{
+if(e.isIntersecting){
+setTimeout(()=>e.target.classList.add('visible'),i*80);
+io.unobserve(e.target);
 }
+});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.clip-reveal').forEach(el=>io.observe(el));
+}else{
+document.querySelectorAll('.reveal,.clip-reveal').forEach(el=>el.classList.add('visible'));
+}
+
+/* === PARALLAX HERO === */
+if(!reduced){
+const heroBg=document.getElementById('heroBg');
+window.addEventListener('scroll',()=>{
+const y=window.scrollY;if(y<921){heroBg.style.transform=`translateY(${y*0.4}px) scale(1.1)`}
+},{passive:true});
+}
+
+/* === NAV SCROLL === */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
+
+/* === BLOOM OVERLAY ON CTA === */
+if(!reduced){
+const bloom=document.getElementById('bloomOverlay');
+const cta=document.getElementById('ctaInfo');
+cta.addEventListener('mousemove',e=>{
+const rect=cta.getBoundingClientRect();
+bloom.style.opacity='1';
+bloom.style.left=(e.clientX)+'px';bloom.style.top=(e.clientY)+'px';
+});
+cta.addEventListener('mouseleave',()=>{bloom.style.opacity='0'});
+}
+})();
 </script>
-
 </body>
 </html>
